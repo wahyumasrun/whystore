@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package kelas;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 /**
  *
  * @author MA ATTAUHID
@@ -17,7 +19,8 @@ public class Koneksi {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     private Connection mysqlconfig;
-    public Connection configDB(){
+
+    public Connection configDB() {
         try {
             String url = "jdbc:mysql://localhost:3306/crudoop_202457201068";
             String user = "root";
@@ -28,6 +31,5 @@ public class Koneksi {
         }
         return mysqlconfig;
     }
-    
-    
+
 }

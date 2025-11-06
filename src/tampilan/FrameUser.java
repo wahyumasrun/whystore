@@ -4,12 +4,10 @@
  */
 package tampilan;
 
-
 import kelas.user;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JTable;
-
 
 /**
  *
@@ -25,23 +23,23 @@ public class FrameUser extends javax.swing.JFrame {
         load_table();
         reset();
     }
-    
-    void reset(){
+
+    void reset() {
         tUsername.setText(null);
         tEmail.setText(null);
         tPassword.setText(null);
         tFullName.setText(null);
         cStatus.setSelectedItem(null);
     }
-    
-    void load_table(){
+
+    void load_table() {
         DefaultTableModel model = new DefaultTableModel();
-        
+
         model.addColumn("Username");
         model.addColumn("Email");
         model.addColumn("Full Name");
         model.addColumn("Status");
-        
+
         try {
             user usr = new user();
             ResultSet result = usr.TampilUser();
@@ -95,6 +93,12 @@ public class FrameUser extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Username");
+
+        tUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tUsernameActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Email");
@@ -168,7 +172,7 @@ public class FrameUser extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Username", "Email", "Full Name", "Status"
             }
         ));
         tblUser.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -275,11 +279,12 @@ public class FrameUser extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 36, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -292,14 +297,14 @@ public class FrameUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-       user usr = new user();
+        user usr = new user();
         usr.setUserName(tUsername.getText());
         usr.setUserEmail(tEmail.getText());
         usr.setUserPassword(tPassword.getText());
         usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif")  {
-             usr.setUserStatus(1);
-        }else {
+        if (cStatus.getSelectedItem() == "Aktif") {
+            usr.setUserStatus(1);
+        } else {
             usr.setUserStatus(0);
         }
         usr.ubahData();
@@ -313,9 +318,9 @@ public class FrameUser extends javax.swing.JFrame {
         usr.setUserEmail(tEmail.getText());
         usr.setUserPassword(tPassword.getText());
         usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif")  {
-             usr.setUserStatus(1);
-        }else {
+        if (cStatus.getSelectedItem() == "Aktif") {
+            usr.setUserStatus(1);
+        } else {
             usr.setUserStatus(0);
         }
         reset();
@@ -328,8 +333,7 @@ public class FrameUser extends javax.swing.JFrame {
         String fullname = tblUser.getValueAt(baris, 1).toString();
         String email = tblUser.getValueAt(baris, 2).toString();
         String status = tblUser.getValueAt(baris, 3).toString();
-        
-        
+
         tUsername.setText(username);
         tFullName.setText(fullname);
         tEmail.setText(email);
@@ -342,9 +346,9 @@ public class FrameUser extends javax.swing.JFrame {
         usr.setUserEmail(tEmail.getText());
         usr.setUserPassword(tPassword.getText());
         usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif")  {
-             usr.setUserStatus(1);
-        }else {
+        if (cStatus.getSelectedItem() == "Aktif") {
+            usr.setUserStatus(1);
+        } else {
             usr.setUserStatus(0);
         }
         usr.tambahUSer();
@@ -358,9 +362,9 @@ public class FrameUser extends javax.swing.JFrame {
         usr.setUserEmail(tEmail.getText());
         usr.setUserPassword(tPassword.getText());
         usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif")  {
-             usr.setUserStatus(1);
-        }else {
+        if (cStatus.getSelectedItem() == "Aktif") {
+            usr.setUserStatus(1);
+        } else {
             usr.setUserStatus(0);
         }
         usr.deleteData();
@@ -371,6 +375,10 @@ public class FrameUser extends javax.swing.JFrame {
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void tUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tUsernameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,4 +438,3 @@ public class FrameUser extends javax.swing.JFrame {
     private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
 }
-   

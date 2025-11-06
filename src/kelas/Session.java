@@ -9,6 +9,7 @@ package kelas;
  * @author MA ATTAUHID
  */
 public class Session {
+
     private static String username, email, fullname, status;
 
     public static String getUsername() {
@@ -43,5 +44,4 @@ public class Session {
         Session.status = status;
     }
 
-    
 }

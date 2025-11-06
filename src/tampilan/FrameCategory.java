@@ -4,6 +4,12 @@
  */
 package tampilan;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import kelas.category;
+
 /**
  *
  * @author MA ATTAUHID
@@ -15,6 +21,55 @@ public class FrameCategory extends javax.swing.JFrame {
      */
     public FrameCategory() {
         initComponents();
+        reset();
+        loadTable();
+        autoID();
+    }
+
+    void autoID() {
+        category catID = new category();
+        ResultSet rsVar = catID.autoID();
+        try {
+
+            if (rsVar.next()) {
+                int id = rsVar.getInt("ID") + 1;
+                tCategoryID.setText(String.valueOf(id));
+            } else {
+                tCategoryID.setText("1");
+            }
+
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+    }
+
+    void reset() {
+        autoID();
+        tCategoryID.setEditable(false);
+        tCategoryID.setText(null);
+    }
+
+    void loadTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        category categoryData = new category();
+
+        model.addColumn("ID Category");
+        model.addColumn("Nama Category");
+
+        try {
+            ResultSet rsVar = categoryData.loadData();
+
+            while (rsVar.next()) {
+                int id = rsVar.getInt("categoryId");
+                String nama = rsVar.getString("categoryName");
+
+                Object data[] = {id, nama};
+                model.addRow(data);
+            }
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+        tblCategory.setModel(model);
     }
 
     /**
@@ -31,7 +86,7 @@ public class FrameCategory extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         tCategoryID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        cCategoryName = new javax.swing.JComboBox<>();
+        tCategoryName = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCategory = new javax.swing.JTable();
         btnTambah = new javax.swing.JButton();
@@ -53,8 +108,6 @@ public class FrameCategory extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Category Name");
 
-        cCategoryName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -67,8 +120,7 @@ public class FrameCategory extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(cCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
+                    .addComponent(tCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,47 +132,77 @@ public class FrameCategory extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tCategoryID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         tblCategory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Category ID", "Category Name"
             }
         ));
+        tblCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCategoryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCategory);
 
         btnTambah.setBackground(new java.awt.Color(0, 255, 102));
         btnTambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnTambah.setForeground(new java.awt.Color(255, 255, 255));
         btnTambah.setText("Tambah");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
 
         btnUbah.setBackground(new java.awt.Color(0, 102, 255));
         btnUbah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUbah.setForeground(new java.awt.Color(255, 255, 255));
         btnUbah.setText("Ubah");
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
 
         btnHapus.setBackground(new java.awt.Color(255, 51, 0));
         btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         btnReset.setBackground(new java.awt.Color(255, 255, 0));
         btnReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReset.setForeground(new java.awt.Color(255, 255, 255));
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         btnKembali.setBackground(new java.awt.Color(0, 255, 102));
         btnKembali.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnKembali.setForeground(new java.awt.Color(255, 255, 255));
         btnKembali.setText("Kembali");
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKembaliActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,6 +257,63 @@ public class FrameCategory extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        category categorySave = new category();
+
+        categorySave.setCategoryId(Integer.parseInt(tCategoryID.getText()));
+        categorySave.setCategoryName(tCategoryName.getText());
+
+        categorySave.tambahCategory();
+
+        reset();
+
+        loadTable();
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        category categoryUbah = new category();
+
+        categoryUbah.setCategoryId(Integer.parseInt(tCategoryID.getText()));
+        categoryUbah.setCategoryName(tCategoryName.getText());
+
+        categoryUbah.ubahCategory();
+
+        reset();
+
+        loadTable();
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        category categoryUbah = new category();
+
+        categoryUbah.setCategoryId(Integer.parseInt(tCategoryID.getText()));
+        categoryUbah.setCategoryName(tCategoryName.getText());
+
+        categoryUbah.deleteCateory();
+
+        reset();
+
+        loadTable();
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        reset();
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void tblCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoryMouseClicked
+        int choiceRow = tblCategory.rowAtPoint(evt.getPoint());
+
+        String id = tblCategory.getValueAt(choiceRow, 0).toString();
+        String nama = tblCategory.getValueAt(choiceRow, 1).toString();
+
+        tCategoryID.setText(id);
+        tCategoryName.setText(nama);
+    }//GEN-LAST:event_tblCategoryMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -219,13 +358,13 @@ public class FrameCategory extends javax.swing.JFrame {
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
-    private javax.swing.JComboBox<String> cCategoryName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField tCategoryID;
+    private javax.swing.JTextField tCategoryName;
     private javax.swing.JTable tblCategory;
     // End of variables declaration//GEN-END:variables
 }
