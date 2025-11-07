@@ -4,6 +4,12 @@
  */
 package tampilan;
 
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import kelas.category;
+import kelas.product;
+
 /**
  *
  * @author MA ATTAUHID
@@ -15,6 +21,84 @@ public class FrameProduct extends javax.swing.JFrame {
      */
     public FrameProduct() {
         initComponents();
+        loadData();
+        valueComboBox();
+        reset();
+        autoId();
+    }
+    
+    void autoId(){
+        
+        try {
+            product proId = new product();
+            ResultSet rsVar = proId.autoId();
+
+            if (rsVar.next()) {
+                int id = rsVar.getInt("ID") + 1;
+                tID.setText(String.valueOf(id));
+            } else {
+                tID.setText("1");
+            }
+
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+    }
+    
+    void reset(){
+        autoId();
+        tID.setEditable(false);
+        tProductName.setText(null);
+        tProductDesc.setText(null);
+        tProductPrice.setText(null);
+        cProductCategory.setSelectedItem(null);
+    }
+    
+    void loadData(){
+        DefaultTableModel model = new DefaultTableModel();
+        product productData = new product();
+        
+        model.addColumn("ID Produk");
+        model.addColumn("Nama Produk");
+        model.addColumn("Kategori Produk");
+        model.addColumn("Deskripsi Produk");
+        model.addColumn("Harga Produk");
+        
+        ResultSet rsVar = productData.showProduct();
+        try {
+            
+            while (rsVar.next()) {                
+                int id = rsVar.getInt("productId");
+                String name = rsVar.getString("productName");
+                String category = rsVar.getString("categoryName");
+                String description = rsVar.getString("productDescription");
+                int price = rsVar.getInt("productPrice");
+                
+                Object[] data = {id, name, category, description, price};
+                model.addRow(data);
+            }
+            
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+        tblProduct.setModel(model);
+    }
+    
+    void valueComboBox(){
+        
+        try {
+            category value = new category();
+            ResultSet rsVar = value.dataComboBox();
+
+            while (rsVar.next()) {
+                String data = rsVar.getString("categoryName");
+                cProductCategory.addItem(data);
+            }
+
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+    
     }
 
     /**
@@ -86,8 +170,6 @@ public class FrameProduct extends javax.swing.JFrame {
             }
         });
 
-        cProductCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,26 +179,24 @@ public class FrameProduct extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tID, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(tProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                    .addComponent(tProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(tProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(tProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addGap(73, 73, 73)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(102, 102, 102))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cProductCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(50, 50, 50))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(cProductCategory, 0, 145, Short.MAX_VALUE)
+                                .addContainerGap(50, Short.MAX_VALUE))
+                            .addComponent(jLabel4)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(tProductDesc)
-                        .addGap(50, 50, 50))))
+                        .addComponent(tProductDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(50, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,35 +204,40 @@ public class FrameProduct extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tProductDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Product", "Product Name", "Product Price", "Product Description", "Product Category"
             }
         ));
+        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProduct);
 
         btnTambah.setBackground(new java.awt.Color(0, 255, 102));
@@ -169,16 +254,31 @@ public class FrameProduct extends javax.swing.JFrame {
         btnUbah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUbah.setForeground(new java.awt.Color(255, 255, 255));
         btnUbah.setText("Ubah");
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
 
         btnHapus.setBackground(new java.awt.Color(255, 51, 0));
         btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         btnReset.setBackground(new java.awt.Color(255, 255, 0));
         btnReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReset.setForeground(new java.awt.Color(255, 255, 255));
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         btnKembali.setBackground(new java.awt.Color(0, 255, 102));
         btnKembali.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -214,11 +314,11 @@ public class FrameProduct extends javax.swing.JFrame {
                                 .addGap(46, 46, 46)
                                 .addComponent(btnReset))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -238,7 +338,7 @@ public class FrameProduct extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnKembali)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -258,12 +358,99 @@ public class FrameProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_tProductDescActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        // TODO add your handling code here:
+        product productTambah = new product();
+        category categoryTambah = new category();
+        
+        try {
+            productTambah.setProductId(Integer.parseInt(tID.getText()));
+            productTambah.setProductName(tProductName.getText());
+            productTambah.setProductDescription(tProductDesc.getText());
+            productTambah.setProductPrice(Integer.parseInt(tProductPrice.getText()));
+            
+            categoryTambah.setCategoryName(cProductCategory.getSelectedItem().toString());
+            ResultSet rsVarCek = categoryTambah.konversi();
+            
+            if (rsVarCek.next()) {
+                int id = rsVarCek.getInt("categoryId");
+                productTambah.setProductCategory(id);
+            }
+           
+            productTambah.tambahProduct();
+            
+        } catch (NumberFormatException numberFormatException) {
+            JOptionPane.showMessageDialog(null, "Error : " + numberFormatException.getMessage());
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+        
+        reset();
+        loadData();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
+        int choiceRow = tblProduct.rowAtPoint(evt.getPoint());
+        
+        String id = tblProduct.getValueAt(choiceRow, 0).toString();
+        String nama = tblProduct.getValueAt(choiceRow, 1).toString();
+        String category = tblProduct.getValueAt(choiceRow, 2).toString();
+        String deskripsi = tblProduct.getValueAt(choiceRow, 3).toString();
+        String harga = tblProduct.getValueAt(choiceRow, 4).toString();
+        
+        tID.setText(id);
+        tProductName.setText(nama);
+        cProductCategory.setSelectedItem(category);
+        tProductDesc.setText(deskripsi);
+        tProductPrice.setText(harga);
+    }//GEN-LAST:event_tblProductMouseClicked
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        product productTambah = new product();
+        category categoryTambah = new category();
+        
+        try {
+            productTambah.setProductId(Integer.parseInt(tID.getText()));
+            productTambah.setProductName(tProductName.getText());
+            productTambah.setProductDescription(tProductDesc.getText());
+            productTambah.setProductPrice(Integer.parseInt(tProductPrice.getText()));
+            
+            categoryTambah.setCategoryName(cProductCategory.getSelectedItem().toString());
+            ResultSet rsVarCek = categoryTambah.konversi();
+            
+            if (rsVarCek.next()) {
+                int id = rsVarCek.getInt("categoryId");
+                productTambah.setProductCategory(id);
+            }
+           
+            productTambah.ubahProduct();
+            
+        } catch (NumberFormatException numberFormatException) {
+            JOptionPane.showMessageDialog(null, "Error : " + numberFormatException.getMessage());
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+        
+        reset();
+        loadData();
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        product productHapus = new product();
+        
+        productHapus.setProductId(Integer.parseInt(tID.getText()));
+        
+        productHapus.deleteProduct();
+        
+        reset();
+        loadData();
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        reset();
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
