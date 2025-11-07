@@ -4,6 +4,10 @@
  */
 package tampilan;
 
+import javax.swing.JOptionPane;
+import kelas.Session;
+import kelas.user;
+
 /**
  *
  * @author MA ATTAUHID
@@ -31,6 +35,7 @@ public class FrameLogin extends javax.swing.JFrame {
         btnlogin = new javax.swing.JButton();
         tUserName = new javax.swing.JTextField();
         tPassword = new javax.swing.JPasswordField();
+        lblClose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,7 +55,21 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         });
 
+        tUserName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tUserNameActionPerformed(evt);
+            }
+        });
+
         tPassword.setText("jPasswordField1");
+
+        lblClose.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblClose.setText("Close");
+        lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCloseMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,6 +88,10 @@ public class FrameLogin extends javax.swing.JFrame {
                             .addComponent(tUserName)
                             .addComponent(tPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))))
                 .addContainerGap(73, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,7 +106,9 @@ public class FrameLogin extends javax.swing.JFrame {
                     .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(btnlogin)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(lblClose)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -91,8 +116,31 @@ public class FrameLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-        // TODO add your handling code here:
+        user userLogin = new user();
+
+        if (tUserName.getText().isBlank() || tPassword.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Username dan Password tidak boleh kosong");
+        } else {
+
+            userLogin.setUserName(tUserName.getText());
+            userLogin.setUserPassword(tPassword.getText());
+            userLogin.login();
+
+            if (Session.getStatus().equals("Active")) {
+                dispose();
+                new FrameDashboard().setVisible(true);
+
+            }
+        }
     }//GEN-LAST:event_btnloginActionPerformed
+
+    private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lblCloseMouseClicked
+
+    private void tUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUserNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tUserNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,6 +182,7 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnlogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblClose;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUserName;
     // End of variables declaration//GEN-END:variables

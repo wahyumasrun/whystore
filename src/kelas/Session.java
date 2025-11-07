@@ -10,7 +10,7 @@ package kelas;
  */
 public class Session {
 
-    private static String username, email, fullname, status;
+    private static String username, nama, email, fullname, status;
 
     public static String getUsername() {
         return username;
@@ -43,5 +43,15 @@ public class Session {
     public static void setStatus(String status) {
         Session.status = status;
     }
+
+    public static String getNama() {
+        return nama;
+    }
+
+    public static void setNama(String nama) {
+        Session.nama = nama;
+    }
+
+    
 
 }

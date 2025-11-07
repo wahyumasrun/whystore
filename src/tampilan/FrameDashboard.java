@@ -4,6 +4,9 @@
  */
 package tampilan;
 
+import kelas.Session;
+import kelas.user;
+
 /**
  *
  * @author MA ATTAUHID
@@ -15,6 +18,13 @@ public class FrameDashboard extends javax.swing.JFrame {
      */
     public FrameDashboard() {
         initComponents();
+        sesiApp();
+    }
+
+    void sesiApp() {
+        lblUsername.setText(Session.getUsername());
+        lblEmail.setText(Session.getEmail());
+        lblNama.setText(Session.getNama());
     }
 
     /**
@@ -30,12 +40,16 @@ public class FrameDashboard extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        lblUsername = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblNama = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         miLogOut = new javax.swing.JMenuItem();
         mProduct = new javax.swing.JMenu();
         mCategory = new javax.swing.JMenu();
         mUser = new javax.swing.JMenu();
+        mLogOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,6 +61,12 @@ public class FrameDashboard extends javax.swing.JFrame {
         jLabel3.setText("Email          :");
 
         jLabel4.setText("Nama         :");
+
+        lblUsername.setText(" ");
+
+        lblEmail.setText(" ");
+
+        lblNama.setText(" ");
 
         jMenu1.setText("File");
 
@@ -91,6 +111,14 @@ public class FrameDashboard extends javax.swing.JFrame {
         });
         jMenuBar1.add(mUser);
 
+        mLogOut.setText("Log Out");
+        mLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mLogOutActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(mLogOut);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,15 +128,20 @@ public class FrameDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                        .addGap(99, 99, 99)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4))))
-                .addContainerGap(123, Short.MAX_VALUE))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNama, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel1)))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,11 +149,17 @@ public class FrameDashboard extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addGap(40, 40, 40)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblUsername))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblEmail))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lblNama))
                 .addContainerGap(176, Short.MAX_VALUE))
         );
 
@@ -129,19 +168,27 @@ public class FrameDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mProductMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_mProductMenuSelected
-        // TODO add your handling code here:
+        dispose();
         new FrameProduct().setVisible(true);
     }//GEN-LAST:event_mProductMenuSelected
 
     private void mCategoryMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_mCategoryMenuSelected
-        // TODO add your handling code here:
+        dispose();
         new FrameCategory().setVisible(true);
     }//GEN-LAST:event_mCategoryMenuSelected
 
     private void mUserMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_mUserMenuSelected
-        // TODO add your handling code here:
+        dispose();
         new FrameUser().setVisible(true);
     }//GEN-LAST:event_mUserMenuSelected
+
+    private void mLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLogOutActionPerformed
+        user userLogOut = new user();
+        userLogOut.logOut();
+
+        dispose();
+        new FrameLogin().setVisible(true);
+    }//GEN-LAST:event_mLogOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,7 +233,11 @@ public class FrameDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblNama;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JMenu mCategory;
+    private javax.swing.JMenu mLogOut;
     private javax.swing.JMenu mProduct;
     private javax.swing.JMenu mUser;
     private javax.swing.JMenuItem miLogOut;
