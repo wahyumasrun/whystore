@@ -44,12 +44,11 @@ public class FrameDashboard extends javax.swing.JFrame {
         lblEmail = new javax.swing.JLabel();
         lblNama = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        mLogOut = new javax.swing.JMenu();
         miLogOut = new javax.swing.JMenuItem();
         mProduct = new javax.swing.JMenu();
         mCategory = new javax.swing.JMenu();
         mUser = new javax.swing.JMenu();
-        mLogOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,12 +67,17 @@ public class FrameDashboard extends javax.swing.JFrame {
 
         lblNama.setText(" ");
 
-        jMenu1.setText("File");
+        mLogOut.setText("File");
+        mLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mLogOutActionPerformed(evt);
+            }
+        });
 
         miLogOut.setText("Log Out");
-        jMenu1.add(miLogOut);
+        mLogOut.add(miLogOut);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mLogOut);
 
         mProduct.setText("Product");
         mProduct.addMenuListener(new javax.swing.event.MenuListener() {
@@ -110,14 +114,6 @@ public class FrameDashboard extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(mUser);
-
-        mLogOut.setText("Log Out");
-        mLogOut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mLogOutActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(mLogOut);
 
         setJMenuBar(jMenuBar1);
 
@@ -185,7 +181,7 @@ public class FrameDashboard extends javax.swing.JFrame {
     private void mLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLogOutActionPerformed
         user userLogOut = new user();
         userLogOut.logOut();
-
+        
         dispose();
         new FrameLogin().setVisible(true);
     }//GEN-LAST:event_mLogOutActionPerformed
@@ -231,7 +227,6 @@ public class FrameDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblNama;

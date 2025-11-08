@@ -8,7 +8,7 @@ import kelas.user;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JTable;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author MA ATTAUHID
@@ -297,17 +297,26 @@ public class FrameUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        user usr = new user();
-        usr.setUserName(tUsername.getText());
-        usr.setUserEmail(tEmail.getText());
-        usr.setUserPassword(tPassword.getText());
-        usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif") {
-            usr.setUserStatus(1);
-        } else {
-            usr.setUserStatus(0);
+         if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tFullName.getText().isBlank() || (cStatus.getSelectedItem() == null)) {
+            JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan");
+            return;
         }
-        usr.ubahData();
+
+        user userUbah = new user();
+
+        userUbah.setUserName(tUsername.getText());
+        userUbah.setUserEmail(tEmail.getText());
+        userUbah.setUserPassword(tPassword.getText());
+        userUbah.setUserFullName(tFullName.getText());
+
+        if (cStatus.getSelectedItem() == "Active") {
+            userUbah.setUserStatus(1);
+        } else {
+            userUbah.setUserStatus(0);
+        }
+        
+         userUbah.ubahData();
+
         reset();
         load_table();
     }//GEN-LAST:event_btnUbahActionPerformed
@@ -341,33 +350,41 @@ public class FrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUserMouseClicked
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        user usr = new user();
-        usr.setUserName(tUsername.getText());
-        usr.setUserEmail(tEmail.getText());
-        usr.setUserPassword(tPassword.getText());
-        usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif") {
-            usr.setUserStatus(1);
-        } else {
-            usr.setUserStatus(0);
+        if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tPassword.getText().isBlank() || tFullName.getText().isBlank() || (cStatus.getSelectedItem() == null)) {
+            JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan");
+            return;
         }
-        usr.tambahUSer();
+
+        user userTambah = new user();
+
+        userTambah.setUserName(tUsername.getText());
+        userTambah.setUserEmail(tEmail.getText());
+        userTambah.setUserPassword(tPassword.getText());
+        userTambah.setUserFullName(tFullName.getText());
+
+        if (cStatus.getSelectedItem() == "Active") {
+            userTambah.setUserStatus(1);
+        } else {
+            userTambah.setUserStatus(0);
+        }
+        userTambah.tambahUSer();
+
         reset();
         load_table();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        user usr = new user();
-        usr.setUserName(tUsername.getText());
-        usr.setUserEmail(tEmail.getText());
-        usr.setUserPassword(tPassword.getText());
-        usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif") {
-            usr.setUserStatus(1);
-        } else {
-            usr.setUserStatus(0);
+        if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tPassword.getText().isBlank() || tFullName.getText().isBlank() || (cStatus.getSelectedItem() == null)) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data yang ingin dihapus");
+            return;
         }
-        usr.deleteData();
+
+        user userHapus = new user();
+
+        userHapus.setUserName(tUsername.getText());
+
+        userHapus.deleteData();
+
         reset();
         load_table();
     }//GEN-LAST:event_btnHapusActionPerformed
