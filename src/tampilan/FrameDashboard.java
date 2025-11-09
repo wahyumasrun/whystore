@@ -22,9 +22,9 @@ public class FrameDashboard extends javax.swing.JFrame {
     }
 
     void sesiApp() {
-        lblUsername.setText(Session.getUsername());
+        lblFullName.setText(Session.getFullname());
         lblEmail.setText(Session.getEmail());
-        lblNama.setText(Session.getNama());
+        lblUserName.setText(Session.getUsername());
     }
 
     /**
@@ -37,12 +37,9 @@ public class FrameDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        lblUsername = new javax.swing.JLabel();
+        lblFullName = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
-        lblNama = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mLogOut = new javax.swing.JMenu();
         miLogOut = new javax.swing.JMenuItem();
@@ -55,17 +52,14 @@ public class FrameDashboard extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("SELAMAT DATANG DI WHYSTORE");
 
-        jLabel2.setText("Username  :");
+        lblFullName.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        lblFullName.setText("Username ");
 
-        jLabel3.setText("Email          :");
+        lblEmail.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        lblEmail.setText("Email          ");
 
-        jLabel4.setText("Nama         :");
-
-        lblUsername.setText(" ");
-
-        lblEmail.setText(" ");
-
-        lblNama.setText(" ");
+        lblUserName.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        lblUserName.setText("Nama         ");
 
         mLogOut.setText("File");
         mLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -124,39 +118,28 @@ public class FrameDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNama, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(112, 112, 112)
-                        .addComponent(jLabel1)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEmail)
+                            .addComponent(lblFullName)
+                            .addComponent(lblUserName))))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblUsername))
+                .addGap(46, 46, 46)
+                .addComponent(lblFullName)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblEmail))
+                .addComponent(lblEmail)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblNama))
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addComponent(lblUserName)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,13 +207,10 @@ public class FrameDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblNama;
-    private javax.swing.JLabel lblUsername;
+    private javax.swing.JLabel lblFullName;
+    private javax.swing.JLabel lblUserName;
     private javax.swing.JMenu mCategory;
     private javax.swing.JMenu mLogOut;
     private javax.swing.JMenu mProduct;

@@ -15,9 +15,6 @@ import java.sql.SQLException;
  */
 public class Koneksi {
 
-    static PreparedStatement prepareStatement(String query) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     private Connection mysqlconfig;
 
     public Connection configDB() {

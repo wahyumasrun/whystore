@@ -80,10 +80,10 @@ public class user extends Koneksi {
             ps.setInt(5, this.userStatus);
             ps.executeUpdate();
             ps.close();
-            JOptionPane.showMessageDialog(null, "Data Berhasil Di Tambahkan");
+            JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan");
         } catch (SQLException e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Data Gagal Di Tambahkan");
+            JOptionPane.showMessageDialog(null, "Data Gagal Ditambahkan");
         }
     }
 
@@ -94,9 +94,9 @@ public class user extends Koneksi {
             ps.setString(1, this.userName);
             ps.executeUpdate();
             ps.close();
-            JOptionPane.showMessageDialog(null, "Data Berhasil Di Hapus");
+            JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Data Gagal Di Hapus");
+            JOptionPane.showMessageDialog(null, "Data Gagal Dihapus");
         }
     }
 
@@ -111,9 +111,9 @@ public class user extends Koneksi {
             ps.setString(5, userName);
             ps.executeUpdate();
             ps.close();
-            JOptionPane.showMessageDialog(null, "Data Berhasil Di Ubah");
+            JOptionPane.showMessageDialog(null, "Data Berhasil Diubah");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Data Gagal Di Ubah");
+            JOptionPane.showMessageDialog(null, "Data Gagal Diubah");
         }
     }
 
@@ -131,7 +131,7 @@ public class user extends Koneksi {
     public void login() {
         query = "SELECT*FROM user WHERE userName = ? AND userPassword = MD5(?)";
         try {
-            ps = Koneksi.prepareStatement(query);
+            ps = cn.prepareStatement(query);
             ps.setString(1, userName);
             ps.setString(2, userPassword);
 
