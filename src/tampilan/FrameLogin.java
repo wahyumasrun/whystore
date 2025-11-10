@@ -136,7 +136,7 @@ public class FrameLogin extends javax.swing.JFrame {
 
             userLogin.setUserName(tUserName.getText());
             userLogin.setUserPassword(tPassword.getText());
-            userLogin.login();
+            userLogin.login(); 
 
             if (Session.getStatus().equals("Active")) {
                 dispose();

@@ -44,7 +44,7 @@ public class FrameUser extends javax.swing.JFrame {
             user usr = new user();
             ResultSet result = usr.TampilUser();
             while (result.next()) {
-                String status = (result.getInt("userStatus") == 1) ? "Aktif" : "Non-Aktif";
+                String status = (result.getInt("userStatus") == 1) ? "Active" : "Non-Active";
                 model.addRow(new Object[]{
                     result.getString("userName"),
                     result.getString("userEmail"),
@@ -327,7 +327,7 @@ public class FrameUser extends javax.swing.JFrame {
         usr.setUserEmail(tEmail.getText());
         usr.setUserPassword(tPassword.getText());
         usr.setUserFullName(tFullName.getText());
-        if (cStatus.getSelectedItem() == "Aktif") {
+        if (cStatus.getSelectedItem() == "Active") {
             usr.setUserStatus(1);
         } else {
             usr.setUserStatus(0);
@@ -350,7 +350,8 @@ public class FrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUserMouseClicked
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tPassword.getText().isBlank() || tFullName.getText().isBlank() || (cStatus.getSelectedItem() == null)) {
+        if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tPassword.getText().isBlank() ||
+                tFullName.getText().isBlank() || (cStatus.getSelectedItem() == null)) {
             JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan");
             return;
         }
@@ -374,11 +375,7 @@ public class FrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tPassword.getText().isBlank() || tFullName.getText().isBlank() || (cStatus.getSelectedItem() == null)) {
-            JOptionPane.showMessageDialog(null, "Harap memilih data yang ingin dihapus");
-            return;
-        }
-
+       
         user userHapus = new user();
 
         userHapus.setUserName(tUsername.getText());

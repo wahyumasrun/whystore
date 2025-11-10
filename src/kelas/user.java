@@ -155,7 +155,7 @@ public class user extends Koneksi {
     public void logOut() {
         Session.setUsername("");
         Session.setEmail("");
-        Session.setNama("");
+        Session.setFullname("");
         Session.setStatus("");
 
     }
