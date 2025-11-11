@@ -6,6 +6,10 @@ package kelas;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 
 /**
  *
